@@ -315,9 +315,7 @@ class ContrastLoss(nn.Module):
 
         # bert from huggingface
         self.bert_model = DistilBertModel.from_pretrained("distilbert-base-uncased")
-        self.bert_tokenizer = DistilBertTokenizer.from_pretrained(
-            "distilbert-base-uncased"
-        )
+        self.bert_tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
 
         self.sim = Similarity(temp=0.05)  # todo 这个值暂定
         self.loss_fct = nn.CrossEntropyLoss()
@@ -573,6 +571,7 @@ class SERMON(nn.Module):
         hidden, attns = self.transformer_encoder(
             src, attn_mask, key_padding_mask
         )  # (total_len, batch_size, emsize) vs. (nlayers, batch_size, total_len_tgt, total_len_src)
+        print(f'hidden in model forward: {hidden}')
         hal = None
         rating_vec = None
         if rating_prediction:

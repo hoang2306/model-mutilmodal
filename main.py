@@ -254,7 +254,7 @@ def train(data, user_retrive_global, item_retrive_global):
             (tgt_len - 1, 1, 1)
         )  # (batch_size, ntoken) -> (tgt_len - 1, batch_size, ntoken)
         c_loss = text_criterion(context_dis.view(-1, ntokens), seq[1:-1].reshape((-1,)))
-        r_loss = rating_criterion(rating_p, rating)
+        # r_loss = rating_criterion(rating_p, rating)
         t_loss = text_criterion(log_word_prob.view(-1, ntokens), seq[1:].reshape((-1,)))
         cl_loss = model.contrast_loss(rating_vec, log_word_prob)
         # sig_loss = model.sigel_loss(embeddings[0],embeddings[1])
@@ -262,7 +262,6 @@ def train(data, user_retrive_global, item_retrive_global):
         loss = (
             args.text_reg * t_loss
             + args.context_reg * c_loss
-            + args.rating_reg * r_loss
             + args.cl_reg * cl_loss
         )
         # loss = args.rating_reg * r_loss + args.cl_reg * cl_loss
@@ -274,7 +273,7 @@ def train(data, user_retrive_global, item_retrive_global):
 
         context_loss += batch_size * c_loss.item()
         text_loss += batch_size * t_loss.item()
-        rating_loss += batch_size * r_loss.item()
+        # rating_loss += batch_size * r_loss.item()
         contrast_cl_loss += batch_size * cl_loss.item()
         # sigel_loss += batch_size * sig_loss.item()
 
@@ -283,7 +282,8 @@ def train(data, user_retrive_global, item_retrive_global):
         if data.step % args.log_interval == 0 or data.step == data.total_step:
             cur_c_loss = context_loss / total_sample
             cur_t_loss = text_loss / total_sample
-            cur_r_loss = rating_loss / total_sample
+            # cur_r_loss = rating_loss / total_sample
+            cur_r_loss = 0.0
             cur_cl_loss = contrast_cl_loss / total_sample
             cur_sig_loss = sigel_loss / total_sample
             print(

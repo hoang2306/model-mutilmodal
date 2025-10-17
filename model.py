@@ -571,13 +571,14 @@ class SERMON(nn.Module):
         hidden, attns = self.transformer_encoder(
             src, attn_mask, key_padding_mask
         )  # (total_len, batch_size, emsize) vs. (nlayers, batch_size, total_len_tgt, total_len_src)
-        print(f'hidden in model forward: {hidden[0]}')
+        # print(f'hidden in model forward: {hidden[0]}')
         hal = None
         rating_vec = None
         if rating_prediction:
             hal = torch.cat([hidden[0], hidden[1], u_src, i_src], dim=1)
             rating = self.predict_net(hal, user, item).squeeze(1)
         else:
+            hal = torch.cat([hidden[0], hidden[1], u_src, i_src], dim=1)
             rating = None
 
         if context_prediction:

@@ -256,7 +256,7 @@ def train(data, user_retrive_global, item_retrive_global):
         c_loss = text_criterion(context_dis.view(-1, ntokens), seq[1:-1].reshape((-1,)))
         # r_loss = rating_criterion(rating_p, rating)
         t_loss = text_criterion(log_word_prob.view(-1, ntokens), seq[1:].reshape((-1,)))
-        print(f'rating_vec: {rating_vec}')
+        # print(f'rating_vec: {rating_vec}')
         cl_loss = model.contrast_loss(rating_vec, log_word_prob)
         # sig_loss = model.sigel_loss(embeddings[0],embeddings[1])
         # loss = args.text_reg * t_loss + args.context_reg * c_loss + args.rating_reg * r_loss + args.cl_reg * cl_loss +0.001 * sig_loss

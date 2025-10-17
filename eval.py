@@ -542,27 +542,32 @@ item_retrive_global = item_retrive_global.to(device)
 # with open(model_path, "rb") as f:
 #     model = torch.load(f).to(device)
 
-model = SERMON(
-    args.peter_mask,
-    src_len,
-    tgt_len,
-    pad_idx,
-    nuser,
-    nitem,
-    ntokens,
-    args.emsize,
-    args.nhead,
-    args.nhid,
-    args.nlayers,
-    word2idx,
-    idx2word,
-    device,
-    args.output,
-    args.dropout,
-)
-# model = torch.load(model_path).to(device)
-state_dict = torch.load(model_path, weights_only=True)
-model.load_state_dict(state_dict)
+
+# model = SERMON(
+#     args.peter_mask,
+#     src_len,
+#     tgt_len,
+#     pad_idx,
+#     nuser,
+#     nitem,
+#     ntokens,
+#     args.emsize,
+#     args.nhead,
+#     args.nhid,
+#     args.nlayers,
+#     word2idx,
+#     idx2word,
+#     device,
+#     args.output,
+#     args.dropout,
+# )
+# # model = torch.load(model_path).to(device)
+# state_dict = torch.load(model_path, weights_only=True)
+# model.load_state_dict(state_dict)
+# model = model.to(device)
+
+torch.serialization.add_safe_globals([SERMON])
+model = torch.load(model_path, weights_only=False)
 model = model.to(device)
 
 #

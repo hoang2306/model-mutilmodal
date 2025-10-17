@@ -187,6 +187,7 @@ class DataLoader:
         # file_path = os.path.join(data_path,"yelp_df.json")
         reviews=pd.read_json(file_path)
         for index,review in reviews.iterrows():
+            # print(f'review: {review}')
             self.user_dict.add_entity(review['userId'])
             self.item_dict.add_entity(review['itemId'])
             tem = review['review']
@@ -199,31 +200,6 @@ class DataLoader:
                 self.min_rating = rating
 
     def load_data(self, data_path, index_dir):
-        # data = []
-        # reviews = pickle.load(open(data_path, 'rb'))
-        # for review in reviews:
-        #     (fea, adj, tem, sco) = review['template']
-        #     data.append({'user': self.user_dict.entity2idx[review['user']],
-        #                  'item': self.item_dict.entity2idx[review['item']],
-        #                  'rating': review['rating'],
-        #                  'text': self.seq2ids(tem),
-        #                  # 'text': tem,
-        #                  'feature': self.word_dict.word2idx.get(fea, self.__unk)
-        #        })
-        #     if fea in self.word_dict.word2idx:
-        #         self.feature_set.add(fea)
-        #     else:
-        #         self.feature_set.add('<unk>')
-        #
-        # train_index, valid_index, test_index = self.load_index(index_dir)
-        # train, valid, test = [], [], []
-        # for idx in train_index:
-        #     train.append(data[idx])
-        # for idx in valid_index:
-        #     valid.append(data[idx])
-        # for idx in test_index:
-        #     test.append(data[idx])
-        # train_path = os.path.join()
         # tripadvisor
         train_path = os.path.join(data_path,'train_df.csv')
         val_path = os.path.join(data_path,'val_df.csv')
@@ -271,6 +247,7 @@ class Batchify:
         eos = word2idx['<eos>']
         pad = word2idx['<pad>']
         u, i, r, t, f = [], [], [], [], []
+        print(data.keys())
         for index,x in data.iterrows():
             u.append(x['userId'])
             i.append(x['itemId'])
@@ -326,6 +303,7 @@ class Batchify:
             print('0')
         temp=[word2idx.get(w, self.__unk) for w in seq]
         return [word2idx.get(w, self.__unk) for w in seq]
+    
     def next_batch(self):
         if self.step == self.total_step:
             self.step = 0
@@ -341,7 +319,7 @@ class Batchify:
         rating = self.rating[index]
         seq = self.seq[index]  # (batch_size, seq_len)
         aspect = self.aspect[index]  # (batch_size, 1)
-        return user, item, rating, seq,aspect
+        return user, item, rating, seq, aspect
 
 
 def now_time():

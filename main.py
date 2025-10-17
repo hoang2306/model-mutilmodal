@@ -480,12 +480,15 @@ endure_count = 0
 # user_retrive_global=torch.load('/home/wangshuo/dataset/data/cells/retrive_result/user_glabos_retrive.pt')
 # item_retrive_global=torch.load('/home/wangshuo/dataset/data/cells/retrive_result/item_glabos_retrive.pt')
 # tripadvisor
-user_retrive_global = torch.load(
-    "/home/wangshuo/dataset/data/TripAdvisor/retrive_result/user_glabos_retrive.pt"
-)
-item_retrive_global = torch.load(
-    "/home/wangshuo/dataset/data/TripAdvisor/retrive_result/item_glabos_retrive.pt"
-)
+# user_retrive_global = torch.load(
+#     "/home/wangshuo/dataset/data/TripAdvisor/retrive_result/user_glabos_retrive.pt"
+# )
+# item_retrive_global = torch.load(
+#     "/home/wangshuo/dataset/data/TripAdvisor/retrive_result/item_glabos_retrive.pt"
+# )
+user_retrive_global = torch.load(os.path.join(args.data_path, "user_glabos_retrive.pt"))
+item_retrive_global = torch.load(os.path.join(args.data_path, "item_glabos_retrive.pt"))
+
 # yelp "/home/wangshuo/dataset/data/yelp2019/retrive_result/"
 # user_retrive_global=torch.load('/home/wangshuo/dataset/data/yelp2019/retrive_result/user_glabos_retrive.pt')
 # item_retrive_global=torch.load('/home/wangshuo/dataset/data/yelp2019/retrive_result/item_glabos_retrive.pt')

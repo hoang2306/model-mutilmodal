@@ -539,8 +539,9 @@ item_retrive_global = item_retrive_global.to(device)
 #         )
 
 # Load the best saved model
-with open(model_path, "rb") as f:
-    model = torch.load(f).to(device)
+# with open(model_path, "rb") as f:
+#     model = torch.load(f).to(device)
+model = torch.load(model_path).to(device)
 #
 # # Run on test data.
 # test_c_loss, test_t_loss, test_r_loss = evaluate(test_data,user_retrive_global,item_retrive_global)
